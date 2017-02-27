@@ -1,5 +1,5 @@
 # Personal_Project
-This is Personal Project folder for Daniel Oh.
+This is Personal Project folder by Daniel Oh.
 It contains various random projects
 
 ---
