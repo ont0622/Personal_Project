@@ -1,11 +1,11 @@
-/**
+package Personal_Project.Penney_Game; /**
  * Created by Daniel Oh on 2/21/2017.
  * This is a simulation for Penny's Game
  */
 
 import java.util.*;
 
-public class Penny_Game {
+public class Penney_Game {
     public static void main(String[] args) {
         int HeadCount = 0;
         int TailCount = 0;
