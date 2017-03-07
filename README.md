@@ -10,4 +10,4 @@ This program is a simulator for Penney's Game (https://en.wikipedia.org/wiki/Pen
 It supports both console and GUI version. For GUI version, run Penney's_Game_GUI, or you can download executable file from:
 
 
-https://www.dropbox.com/s/05ia2tnf185fc9h/Penney%27s%20Game.jar?dl=0
+https://www.dropbox.com/s/ju15vkn2k1pcm32/Penney%27s%20Game.jar?dl=0
