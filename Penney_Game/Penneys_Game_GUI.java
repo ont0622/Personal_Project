@@ -26,10 +26,11 @@ public class Penneys_Game_GUI extends Application  {
     //calling controller to keep track of data
     static Penney_Game_Control PGC = new Penney_Game_Control();
     static Label currentSequence, console, p1WinN, p2WinN, headCountN,
-            tailCountN, headToTailN, p1WinChance, p2WinChance, totalFlip;
+            tailCountN, headToTailN, p1WinChance, p2WinChance, totalFlip, pgbarLabel;
     static Timeline timeline = new Timeline();
     static double computeSpeed;
     static Slider speed;
+    static ProgressBar pgbar;
 
     public static void main(String[] args){
         launch(args);
@@ -198,9 +199,20 @@ public class Penneys_Game_GUI extends Application  {
         grid.add(sliderBox,0,12,4,1);
 
         //Row 13
+        pgbar = new ProgressBar(0);
+        pgbarLabel = new Label(String.valueOf(pgbar.getProgress()) + "%");
+        HBox pgBox = new HBox();
+        pgBox.setPadding(new Insets(5,10,5,10));
+        pgBox.setSpacing(10);
+        pgBox.setAlignment(Pos.CENTER);
+        pgBox.getChildren().addAll(pgbar, pgbarLabel);
+        grid.add(pgBox,0,13,4,1);
+
+
         console = new Label(PGC.getConsole());
         console.setFont(Font.font("Constantia",FontWeight.BOLD, 15));
-        grid.add(console,3,13,4,1);
+        grid.add(console,0,13,4,1);
+
 
         //EventHandler
         flip_1.setOnAction(new EventHandler<ActionEvent>() {
@@ -286,6 +298,8 @@ public class Penneys_Game_GUI extends Application  {
                 p2WinChance.setText("| Player 2 Win Rate: " + String.format("%.2f", PGC.getP2Chance()) + "%");
                 totalFlip.setText(String.valueOf(PGC.getTotal()));
                 speed.setValue(1);
+                pgbar.setProgress(0);
+                pgbarLabel.setText(String.valueOf(pgbar.getProgress()));
             }
         });
 
@@ -338,6 +352,8 @@ public class Penneys_Game_GUI extends Application  {
     }
 
     public void realTimeFlip(int counts){
+        float ticks = ((float) 1/((float)counts));
+        final float[] progress = {0};
         if (timeline.getStatus().equals(Animation.Status.RUNNING)){
             PGC.setConsole("Flip Already Running");
         }
@@ -346,6 +362,15 @@ public class Penneys_Game_GUI extends Application  {
                     new KeyFrame(Duration.ZERO),
                     new KeyFrame(Duration.millis(computeSpeed/speed.getValue()), e -> {
                         coinFlip();
+                        progress[0] += ticks;
+                        if (counts == -1){
+                            pgbar.setProgress(0);
+                            pgbarLabel.setText("--%");
+                        }
+                        else {
+                            pgbar.setProgress(progress[0]);
+                            pgbarLabel.setText((String.format("%.2f", progress[0] * 100)) + "%");
+                        }
                     })
         );
         timeline.setCycleCount(counts);
