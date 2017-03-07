@@ -9,10 +9,7 @@ package Personal_Project.Penney_Game;
 
 import javafx.animation.*;
 import javafx.application.*;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableIntegerValue;
 import javafx.beans.value.ObservableValue;
 import javafx.event.*;
 import javafx.geometry.*;
@@ -22,11 +19,6 @@ import javafx.scene.text.*;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.*;
-
-import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.*;
-import javafx.concurrent.*;
 import javafx.util.Duration;
 
 public class Penneys_Game_GUI extends Application  {
