@@ -73,10 +73,12 @@ public class Penneys_Game_GUI extends Application  {
         inputBox.getChildren().addAll(player1,player1Field,player2,player2Field);
         grid.add(inputBox,0,1,4,1);
 
-        //Row 3
+        //Row 2
         currentSequence = new Label(PGC.getSequence());
         currentSequence.setFont(Font.font("Consolas", FontWeight.BOLD, 15));
         grid.add(currentSequence,1,2,4,1);
+
+        //Row 3
 
         //Row 4
         Button flip_1 = new Button("1 Flip");
@@ -85,7 +87,7 @@ public class Penneys_Game_GUI extends Application  {
         Button flip_1000 = new Button("1000 Flip");
         Button flip_manual = new Button("Flips");
         Button flip_infinite = new Button("Infinite Flips");
-        Button pauseB = new Button("Pause");
+        Button pauseB = new Button("Stop");
         Button reset = new Button("Reset");
         reset.setFont(Font.font("Constantia", FontWeight.BOLD, 12));
         flip_1.setMaxWidth(Double.MAX_VALUE);
@@ -147,6 +149,8 @@ public class Penneys_Game_GUI extends Application  {
         grid.add(p2box,0,7,4,1);
 
         //Row 8
+
+        //Row 9
         p1WinChance = new Label("Player 1 Win Rate: " + String.format("%2.2f",PGC.getP1Chance()) + "%");
         p2WinChance = new Label("| Player 2 Win Rate: " + String.format("%2.2f",PGC.getP2Chance()) + "%");
         p1WinChance.setFont(Font.font("Consolas", FontWeight.NORMAL, 12));
@@ -158,7 +162,7 @@ public class Penneys_Game_GUI extends Application  {
         rateBox.getChildren().addAll(p1WinChance,p2WinChance);
         grid.add(rateBox, 0,9,4,1);
 
-        //Row 9
+        //Row 10
         Label total = new Label("Total Flips: ");
         total.setFont(Font.font("Constantia", FontWeight.NORMAL,12));
         totalFlip = new Label("" + (PGC.getHeadCount()+PGC.getTailCount()));
@@ -212,6 +216,7 @@ public class Penneys_Game_GUI extends Application  {
         flip_10.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                speed.setValue(1);
                 PGC.setP1Sec(player1Field.getText());
                 PGC.setP2Sec(player2Field.getText());
                 realTimeFlip(10);
@@ -221,6 +226,7 @@ public class Penneys_Game_GUI extends Application  {
         flip_100.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                speed.setValue(1);
                 PGC.setP1Sec(player1Field.getText());
                 PGC.setP2Sec(player2Field.getText());
                 realTimeFlip(100);
@@ -230,6 +236,7 @@ public class Penneys_Game_GUI extends Application  {
         flip_1000.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                speed.setValue(1);
                 PGC.setP1Sec(player1Field.getText());
                 PGC.setP2Sec(player2Field.getText());
                 realTimeFlip(1000);
@@ -239,6 +246,7 @@ public class Penneys_Game_GUI extends Application  {
         flip_manual.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                speed.setValue(1);
                 PGC.setP1Sec(player1Field.getText());
                 PGC.setP2Sec(player2Field.getText());
                 realTimeFlip(Integer.valueOf(input_manual_flip.getText()));
@@ -248,6 +256,7 @@ public class Penneys_Game_GUI extends Application  {
         flip_infinite.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                speed.setValue(1);
                 PGC.setP1Sec(player1Field.getText());
                 PGC.setP2Sec(player2Field.getText());
                 realTimeFlip(Animation.INDEFINITE);
@@ -258,7 +267,7 @@ public class Penneys_Game_GUI extends Application  {
             @Override
             public void handle(ActionEvent event) {
                 timeline.stop();
-                console.setText("Paused");
+                console.setText("Stopped");
             }
         });
 
@@ -330,7 +339,7 @@ public class Penneys_Game_GUI extends Application  {
 
     public void realTimeFlip(int counts){
         if (timeline.getStatus().equals(Animation.Status.RUNNING)){
-            PGC.setConsole("Infinite Flip Already Running");
+            PGC.setConsole("Flip Already Running");
         }
         else {
             timeline = new Timeline(
@@ -340,7 +349,10 @@ public class Penneys_Game_GUI extends Application  {
                     })
         );
         timeline.setCycleCount(counts);
-        PGC.setConsole("Infinite Flip Running");
+        if (counts == -1)
+            PGC.setConsole("Infinite Flips Running");
+        else
+            PGC.setConsole(String.format("%d Flip Running", counts));
         timeline.play();
         timeline.setOnFinished(new EventHandler<ActionEvent>() {
             @Override
