@@ -18,14 +18,14 @@ public class Penney_Game_Control {
         tailCount = 0;
         p1Win = 0;
         p2Win = 0;
-        p1Sec = "Player 1 Sequence";
-        p2Sec = "Player 2 Sequence";
+        p1Sec = "HTT";
+        p2Sec = "TTT";
     }
 
     public String getSequence(){
         //if the sequence is too long, it will return substring of last 7 flips
-        if (sequence.length() > 50){
-            return "..." + sequence.substring(sequence.length()-35, sequence.length());
+        if (sequence.length() > 25){
+            return "..." + sequence.substring(sequence.length()-20, sequence.length());
         }
         return sequence;
     }
@@ -49,7 +49,6 @@ public class Penney_Game_Control {
         return p1Sec;
     }
 
-
     public void setP2Sec(String s){
         this.p2Sec = s.toUpperCase();
     }
@@ -57,7 +56,6 @@ public class Penney_Game_Control {
     public String getP2Sec(){
         return p2Sec;
     }
-
 
     public int getP1Win(){
         return p1Win;
